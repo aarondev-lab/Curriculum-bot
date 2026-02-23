@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ nombre }} {{ apellidos }} - CV</title>
+    <style>
+        :root {
+            --cream: #FDF8F2;
+            --black: #1A1A1A;
+            --gray-light: #f0f0f0;
+            --gray-medium: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--black);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: var(--black);
+            color: var(--cream);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            margin: 0.5rem 0 0;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+        }
+
+        .info-item strong {
+            display: inline-block;
+            min-width: 100px;
+            font-weight: 600;
+        }
+
+        .skill-badge {
+            background-color: var(--gray-light);
+            color: var(--black);
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+            display: inline-block;
+            margin: 0.2rem;
+            font-size: 0.9rem;
+            border: 1px solid var(--gray-medium);
+        }
+
+        .experience-item,
+        .education-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .item-subtitle {
+            color: var(--gray-dark);
+            font-style: italic;
+        }
+
+        .item-date {
+            color: var(--gray-dark);
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background-color: var(--gray-light);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gray-dark);
+            border-top: 1px solid var(--gray-medium);
+        }
+
+        @media print {
+            body {
+                padding: 0;
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ nombre }} {{ apellidos }}</h1>
+            <p>{{ titulo_profesional }}</p>
+            <p>{{ email }} | {{ telefono }} | {{ ubicacion }}</p>
+        </div>
+
+        <div class="content">
+            <!-- Perfil -->
+            <div class="section">
+                <h2>Perfil</h2>
+                <p>{{ perfil }}</p>
+            </div>
+
+            <div class="grid-2">
+                <!-- Experiencia -->
+                <div class="section">
+                    <h2>Experiencia</h2>
+                    {% for exp in experiencia %}
+                    <div class="experience-item">
+                        <div class="item-title">{{ exp.puesto }}</div>
+                        <div class="item-subtitle">{{ exp.empresa }} · {{ exp.ubicacion }}</div>
+                        <div class="item-date">{{ exp.fecha_inicio }} - {{ exp.fecha_fin }}</div>
+                        <p>{{ exp.descripcion }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Educación -->
+                <div class="section">
+                    <h2>Educación</h2>
+                    {% for edu in educacion %}
+                    <div class="education-item">
+                        <div class="item-title">{{ edu.titulo }}</div>
+                        <div class="item-subtitle">{{ edu.institucion }}</div>
+                        <div class="item-date">{{ edu.fecha }}</div>
+                        {% if edu.nota %}<p>Nota: {{ edu.nota }}</p>{% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Habilidades -->
+            <div class="section">
+                <h2>Habilidades</h2>
+                <div>
+                    {% for skill in habilidades %}
+                    <span class="skill-badge">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Idiomas -->
+            <div class="section">
+                <h2>Idiomas</h2>
+                <ul>
+                    {% for idioma in idiomas %}
+                    <li>{{ idioma.nombre }}: {{ idioma.nivel }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            Generado automáticamente · CV Maker Bot
+        </div>
+    </div>
+</body>
+
+</html>
