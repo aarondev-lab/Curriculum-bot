@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CV - {{ nombre }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+        }
+        .sidebar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 2rem;
+        }
+        .main {
+            padding: 2rem;
+        }
+        .nombre {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .titulo {
+            font-size: 1.1rem;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+        .seccion-titulo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            padding-bottom: 0.5rem;
+        }
+        .main .seccion-titulo {
+            border-bottom-color: #2c3e50;
+        }
+        .contacto-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .habilidad-item {
+            background-color: rgba(255,255,255,0.1);
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            margin: 0.2rem;
+            font-size: 0.9rem;
+        }
+        .idioma-item {
+            margin-bottom: 0.5rem;
+        }
+        .idioma-nombre {
+            font-weight: 600;
+        }
+        .idioma-nivel {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        .experiencia-item, .educacion-item {
+            margin-bottom: 1.5rem;
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .item-sub {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        .item-desc {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .perfil {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="grid">
+            <div class="sidebar">
+                <div class="nombre">{{ nombre }}</div>
+                <div class="titulo">Ciberseguridad & Desarrollo</div>
+                
+                <div class="seccion-titulo">Contacto</div>
+                <div class="contacto-item">📧 {{ email }}</div>
+                <div class="contacto-item">📞 {{ telefono }}</div>
+                <div class="contacto-item">📍 {{ direccion }}</div>
+                
+                <div class="seccion-titulo">Habilidades</div>
+                <div>
+                    {% for hab in habilidades.hard %}
+                    <span class="habilidad-item">{{ hab }}</span>
+                    {% endfor %}
+                </div>
+                
+                <div class="seccion-titulo">Idiomas</div>
+                {% for idioma in idiomas %}
+                <div class="idioma-item">
+                    <span class="idioma-nombre">{{ idioma.idioma }}</span> - <span class="idioma-nivel">{{ idioma.nivel }}</span>
+                </div>
+                {% endfor %}
+                
+                <div class="seccion-titulo">Certificaciones</div>
+                {% for cert in certificaciones %}
+                <div>{{ cert.nombre }} ({{ cert.entidad }}, {{ cert.fecha }})</div>
+                {% endfor %}
+            </div>
+            <div class="main">
+                <div class="seccion-titulo">Perfil</div>
+                <div class="perfil">{{ perfil }}</div>
+                
+                <div class="seccion-titulo">Experiencia</div>
+                {% for exp in experiencia %}
+                <div class="experiencia-item">
+                    <div class="item-header">
+                        <span>{{ exp.puesto }}</span>
+                        <span>{{ exp.fecha }}</span>
+                    </div>
+                    <div class="item-sub">{{ exp.empresa }}</div>
+                    <div class="item-desc">{{ exp.descripcion }}</div>
+                </div>
+                {% endfor %}
+                
+                <div class="seccion-titulo">Educación</div>
+                {% for edu in educacion %}
+                <div class="educacion-item">
+                    <div class="item-header">
+                        <span>{{ edu.titulo }}</span>
+                        <span>{{ edu.fecha }}</span>
+                    </div>
+                    <div class="item-sub">{{ edu.institucion }}</div>
+                    <div class="item-desc">{{ edu.descripcion }}</div>
+                </div>
+                {% endfor %}
+                
+                <div class="seccion-titulo">Proyectos</div>
+                {% for proj in proyectos %}
+                <div class="experiencia-item">
+                    <div class="item-header">{{ proj.nombre }}</div>
+                    <div class="item-desc">{{ proj.descripcion }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

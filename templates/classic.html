@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CV - {{ nombre }}</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fff;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.2rem;
+            color: #1a1a1a;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.3rem;
+            color: #2c3e50;
+        }
+
+        .contacto {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .perfil {
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .item {
+            margin-bottom: 1.2rem;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .item-sub {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .habilidades {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .habilidad {
+            background: #f0f0f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        .idioma {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.3rem;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>{{ nombre }}</h1>
+        <div class="contacto">
+            <span>📧 {{ email }}</span>
+            <span>📞 {{ telefono }}</span>
+            <span>📍 {{ direccion }}</span>
+        </div>
+
+        <h2>Perfil</h2>
+        <div class="perfil">{{ perfil }}</div>
+
+        <h2>Experiencia</h2>
+        {% for exp in experiencia %}
+        <div class="item">
+            <div class="item-header">
+                <span>{{ exp.puesto }}</span>
+                <span>{{ exp.fecha }}</span>
+            </div>
+            <div class="item-sub">{{ exp.empresa }}</div>
+            <p>{{ exp.descripcion }}</p>
+        </div>
+        {% endfor %}
+
+        <h2>Educación</h2>
+        {% for edu in educacion %}
+        <div class="item">
+            <div class="item-header">
+                <span>{{ edu.titulo }}</span>
+                <span>{{ edu.fecha }}</span>
+            </div>
+            <div class="item-sub">{{ edu.institucion }}</div>
+            <p>{{ edu.descripcion }}</p>
+        </div>
+        {% endfor %}
+
+        <h2>Habilidades</h2>
+        <div class="grid">
+            <div>
+                <h3>Técnicas</h3>
+                <div class="habilidades">
+                    {% for hab in habilidades.hard %}
+                    <span class="habilidad">{{ hab }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                <h3>Blandas</h3>
+                <div class="habilidades">
+                    {% for hab in habilidades.soft %}
+                    <span class="habilidad">{{ hab }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <h2>Idiomas</h2>
+        {% for idioma in idiomas %}
+        <div class="idioma">
+            <span>{{ idioma.idioma }}</span>
+            <span>{{ idioma.nivel }}</span>
+        </div>
+        {% endfor %}
+
+        <h2>Certificaciones</h2>
+        {% for cert in certificaciones %}
+        <div>{{ cert.nombre }} - {{ cert.entidad }} ({{ cert.fecha }})</div>
+        {% endfor %}
+
+        <h2>Proyectos</h2>
+        {% for proj in proyectos %}
+        <div class="item">
+            <div class="item-header">{{ proj.nombre }}</div>
+            <p>{{ proj.descripcion }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

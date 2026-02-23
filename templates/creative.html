@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CV - {{ nombre }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 1000px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .header .titulo {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .contacto {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        .main {
+            padding: 2rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .seccion {
+            margin-bottom: 2rem;
+        }
+        .seccion h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            position: relative;
+            display: inline-block;
+        }
+        .seccion h2:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 50px;
+            height: 3px;
+            background: #3498db;
+        }
+        .item {
+            margin-bottom: 1.5rem;
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+        }
+        .item-sub {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .item-desc {
+            margin-top: 0.3rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .habilidades {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .habilidad {
+            background: #f0f0f0;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+        .idioma {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .idioma-nombre {
+            font-weight: 600;
+            min-width: 100px;
+        }
+        .progress {
+            flex: 1;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ nombre }}</h1>
+            <div class="titulo">Ciberseguridad & Desarrollo</div>
+            <div class="contacto">
+                <span>📧 {{ email }}</span>
+                <span>📞 {{ telefono }}</span>
+                <span>📍 {{ direccion }}</span>
+            </div>
+        </div>
+        
+        <div class="main">
+            <div class="grid">
+                <div>
+                    <div class="seccion">
+                        <h2>Perfil</h2>
+                        <p>{{ perfil }}</p>
+                    </div>
+                    
+                    <div class="seccion">
+                        <h2>Experiencia</h2>
+                        {% for exp in experiencia %}
+                        <div class="item">
+                            <div class="item-header">
+                                <span>{{ exp.puesto }}</span>
+                                <span>{{ exp.fecha }}</span>
+                            </div>
+                            <div class="item-sub">{{ exp.empresa }}</div>
+                            <div class="item-desc">{{ exp.descripcion }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="seccion">
+                        <h2>Educación</h2>
+                        {% for edu in educacion %}
+                        <div class="item">
+                            <div class="item-header">
+                                <span>{{ edu.titulo }}</span>
+                                <span>{{ edu.fecha }}</span>
+                            </div>
+                            <div class="item-sub">{{ edu.institucion }}</div>
+                            <div class="item-desc">{{ edu.descripcion }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="seccion">
+                        <h2>Habilidades Técnicas</h2>
+                        <div class="habilidades">
+                            {% for hab in habilidades.hard %}
+                            <span class="habilidad">{{ hab }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="seccion">
+                        <h2>Habilidades Blandas</h2>
+                        <div class="habilidades">
+                            {% for hab in habilidades.soft %}
+                            <span class="habilidad">{{ hab }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="seccion">
+                        <h2>Idiomas</h2>
+                        {% for idioma in idiomas %}
+                        <div class="idioma">
+                            <span class="idioma-nombre">{{ idioma.idioma }}</span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {% if idioma.nivel == 'Nativo' %}100{% elif 'C1' in idioma.nivel %}90{% elif 'B2' in idioma.nivel %}70{% else %}50{% endif %}%;"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="seccion">
+                        <h2>Certificaciones</h2>
+                        {% for cert in certificaciones %}
+                        <div>{{ cert.nombre }} ({{ cert.entidad }}, {{ cert.fecha }})</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="seccion">
+                        <h2>Proyectos</h2>
+                        {% for proj in proyectos %}
+                        <div class="item">
+                            <div class="item-header">{{ proj.nombre }}</div>
+                            <div class="item-desc">{{ proj.descripcion }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
