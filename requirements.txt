@@ -1,0 +1,4 @@
+echo # Dependencias del proyecto > requirements.txt
+echo. >> requirements.txt
+echo # Jinja2 para plantillas >> requirements.txt
+echo # pdfkit para generar PDF >> requirements.txt
