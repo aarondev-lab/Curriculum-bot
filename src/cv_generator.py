@@ -1,32 +1,46 @@
 import os
 from jinja2 import Environment, FileSystemLoader
+from weasyprint import HTML
 
-def generar_cv(datos, plantilla="modern", output_path="cv.pdf"):
-    """Genera un CV en PDF usando la plantilla especificada."""
-    base_dir = os.path.dirname(os.path.dirname(__file__))
-    template_dir = os.path.join(base_dir, 'templates')
-    env = Environment(loader=FileSystemLoader(template_dir))
+# Ruta base: src/
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Carpeta templates está al mismo nivel que src, así que subimos un nivel
+TEMPLATES_DIR = os.path.join(BASE_DIR, '..', 'templates')
+
+# Entorno Jinja2
+env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
+
+def generate_cv_from_data(datos: dict, plantilla: str = "modern") -> bytes:
+    """
+    Genera un CV en PDF a partir de los datos y la plantilla elegida.
     
+    Args:
+        datos: Diccionario con la información personal, educación, experiencia, etc.
+        plantilla: Nombre de la plantilla ('modern', 'classic', 'creative')
+    
+    Returns:
+        bytes: Contenido del PDF generado en memoria.
+    """
     # Mapeo de nombres de plantilla a archivos
-    plantillas = {
+    template_map = {
         "modern": "modern.html",
         "classic": "classic.html",
         "creative": "creative.html"
     }
-    
-    if plantilla not in plantillas:
-        raise ValueError(f"Plantilla no válida. Opciones: {list(plantillas.keys())}")
-    
-    template = env.get_template(plantillas[plantilla])
+
+    template_file = template_map.get(plantilla, "modern.html")
+
+    try:
+        template = env.get_template(template_file)
+    except Exception as e:
+        raise Exception(f"Error al cargar la plantilla {template_file}: {e}")
+
+    # Renderizar HTML
     html_content = template.render(datos)
-    
-    # Por ahora guardamos HTML, luego PDF con weasyprint
-    html_output = output_path.replace('.pdf', '.html')
-    with open(html_output, 'w', encoding='utf-8') as f:
-        f.write(html_content)
-    print(f"✅ HTML generado: {html_output}")
-    
-    # Aquí iría la conversión a PDF con weasyprint (comentada por ahora)
-    # from weasyprint import HTML
-    # HTML(string=html_content).write_pdf(output_path)
-    # print(f"✅ PDF generado: {output_path}")
+
+    # Generar PDF en memoria
+    try:
+        pdf_bytes = HTML(string=html_content).write_pdf()
+        return pdf_bytes
+    except Exception as e:
+        raise Exception(f"Error al generar PDF: {e}")
