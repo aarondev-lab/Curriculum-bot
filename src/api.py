@@ -1,9 +1,16 @@
 from fastapi import FastAPI, Form, HTTPException
 from fastapi.responses import Response
 from src.cv_generator import generate_cv_from_data
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Generador de CV API")
-
+# Configurar CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4321", "http://127.0.0.1:4321"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.post("/generar-cv")
 async def generar_cv(
     # Datos personales
@@ -12,41 +19,34 @@ async def generar_cv(
     telefono: str = Form(""),
     direccion: str = Form(""),
     perfil: str = Form(""),
-
-    # Educación (campos múltiples separados por |)
+    # Educación
     educacion_titulos: str = Form(""),
     educacion_instituciones: str = Form(""),
     educacion_fechas: str = Form(""),
     educacion_descripciones: str = Form(""),
-
-    # Experiencia (campos múltiples separados por |)
+    # Experiencia
     experiencia_puestos: str = Form(""),
     experiencia_empresas: str = Form(""),
     experiencia_fechas: str = Form(""),
     experiencia_descripciones: str = Form(""),
-
     # Habilidades
     habilidades_hard: str = Form(""),
     habilidades_soft: str = Form(""),
-
     # Idiomas
     idiomas_nombres: str = Form(""),
     idiomas_niveles: str = Form(""),
-
-    # Certificaciones (opcional)
+    # Certificaciones
     certificaciones_nombres: str = Form(""),
     certificaciones_entidades: str = Form(""),
     certificaciones_fechas: str = Form(""),
-
-    # Proyectos (opcional)
+    # Proyectos
     proyectos_nombres: str = Form(""),
     proyectos_descripciones: str = Form(""),
-
     # Plantilla
     plantilla: str = Form("modern")
 ):
     try:
-        # Construir el diccionario de datos en el formato que espera la plantilla
+        # Construir el diccionario de datos
         datos = {
             "nombre": nombre,
             "email": email,
@@ -113,10 +113,7 @@ async def generar_cv(
             ]
         }
 
-        # Generar PDF
         pdf_bytes = generate_cv_from_data(datos, plantilla)
-
-        # Devolver el PDF como respuesta
         return Response(
             content=pdf_bytes,
             media_type="application/pdf",
