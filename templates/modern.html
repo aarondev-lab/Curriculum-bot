@@ -1,181 +1,192 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>CV - {{ nombre }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>CV Moderno - {{ nombre }}</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f5f7fa;
-            display: flex;
-            justify-content: center;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #eef2f5;
             padding: 2rem;
         }
-        .container {
-            max-width: 1000px;
-            width: 100%;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-        }
-        .sidebar {
-            background-color: #2c3e50;
-            color: white;
-            padding: 2rem;
-        }
-        .main {
-            padding: 2rem;
-        }
-        .nombre {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .titulo {
-            font-size: 1.1rem;
-            font-weight: 400;
-            opacity: 0.8;
-            margin-bottom: 1.5rem;
-        }
-        .seccion-titulo {
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-            padding-bottom: 0.5rem;
-        }
-        .main .seccion-titulo {
-            border-bottom-color: #2c3e50;
-        }
-        .contacto-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .habilidad-item {
-            background-color: rgba(255,255,255,0.1);
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
+
+        .cv-moderno {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
             border-radius: 20px;
-            margin: 0.2rem;
-            font-size: 0.9rem;
+            overflow: hidden;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
         }
-        .idioma-item {
-            margin-bottom: 0.5rem;
+
+        .header {
+            background: #1e3a8a;
+            color: white;
+            padding: 2rem 2.5rem;
         }
-        .idioma-nombre {
+
+        .header h1 {
+            font-size: 2.5rem;
             font-weight: 600;
+            letter-spacing: -0.5px;
         }
-        .idioma-nivel {
-            opacity: 0.8;
-            font-size: 0.9rem;
+
+        .header p {
+            margin-top: 0.5rem;
+            opacity: 0.9;
         }
-        .experiencia-item, .educacion-item {
-            margin-bottom: 1.5rem;
+
+        .contenido {
+            padding: 2rem 2.5rem;
         }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1e3a8a;
+            margin: 1.5rem 0 1rem 0;
+            border-bottom: 3px solid #1e3a8a;
+            padding-bottom: 0.3rem;
+            display: inline-block;
+        }
+
+        .seccion {
+            margin-bottom: 2rem;
+        }
+
+        .item {
+            margin-bottom: 1.2rem;
+        }
+
         .item-header {
             display: flex;
             justify-content: space-between;
             font-weight: 600;
-            margin-bottom: 0.3rem;
+            color: #2d2d2d;
         }
+
         .item-sub {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 0.5rem;
-        }
-        .item-desc {
+            color: #4a4a4a;
+            margin-top: 0.2rem;
             font-size: 0.95rem;
-            line-height: 1.5;
         }
-        .perfil {
-            margin-bottom: 2rem;
-            line-height: 1.6;
+
+        .fecha {
+            color: #1e3a8a;
+            font-weight: 500;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .skills li {
+            background: #e6f0ff;
+            color: #1e3a8a;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .idiomas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .idioma {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .idioma-nombre {
+            font-weight: 600;
+            color: #1e3a8a;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="grid">
-            <div class="sidebar">
-                <div class="nombre">{{ nombre }}</div>
-                <div class="titulo">Ciberseguridad & Desarrollo</div>
-                
-                <div class="seccion-titulo">Contacto</div>
-                <div class="contacto-item">📧 {{ email }}</div>
-                <div class="contacto-item">📞 {{ telefono }}</div>
-                <div class="contacto-item">📍 {{ direccion }}</div>
-                
-                <div class="seccion-titulo">Habilidades</div>
-                <div>
-                    {% for hab in habilidades.hard %}
-                    <span class="habilidad-item">{{ hab }}</span>
+    <div class="cv-moderno">
+        <div class="header">
+            <h1>{{ nombre }}</h1>
+            <p>{% if email %}{{ email }} · {% endif %}{% if telefono %}{{ telefono }} · {% endif %}{% if direccion %}{{
+                direccion }}{% endif %}</p>
+        </div>
+        <div class="contenido">
+            {% if perfil %}
+            <div class="seccion">
+                <h2>Perfil</h2>
+                <p>{{ perfil }}</p>
+            </div>
+            {% endif %}
+
+            {% if experiencia %}
+            <div class="seccion">
+                <h2>Experiencia</h2>
+                {% for exp in experiencia %}
+                <div class="item">
+                    <div class="item-header">
+                        <span>{{ exp.puesto }} · {{ exp.empresa }}</span>
+                        <span class="fecha">{{ exp.fecha }}</span>
+                    </div>
+                    {% if exp.descripcion %}<div class="item-sub">{{ exp.descripcion }}</div>{% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if educacion %}
+            <div class="seccion">
+                <h2>Educación</h2>
+                {% for edu in educacion %}
+                <div class="item">
+                    <div class="item-header">
+                        <span>{{ edu.titulo }} · {{ edu.institucion }}</span>
+                        <span class="fecha">{{ edu.fecha }}</span>
+                    </div>
+                    {% if edu.descripcion %}<div class="item-sub">{{ edu.descripcion }}</div>{% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if habilidades.hard or habilidades.soft %}
+            <div class="seccion">
+                <h2>Habilidades</h2>
+                <ul class="skills">
+                    {% for h in habilidades.hard %}<li>{{ h }}</li>{% endfor %}
+                    {% for s in habilidades.soft %}<li>{{ s }}</li>{% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if idiomas %}
+            <div class="seccion">
+                <h2>Idiomas</h2>
+                <div class="idiomas">
+                    {% for idioma in idiomas %}
+                    <div class="idioma">
+                        <span class="idioma-nombre">{{ idioma.idioma }}</span>
+                        <span>{{ idioma.nivel }}</span>
+                    </div>
                     {% endfor %}
                 </div>
-                
-                <div class="seccion-titulo">Idiomas</div>
-                {% for idioma in idiomas %}
-                <div class="idioma-item">
-                    <span class="idioma-nombre">{{ idioma.idioma }}</span> - <span class="idioma-nivel">{{ idioma.nivel }}</span>
-                </div>
-                {% endfor %}
-                
-                <div class="seccion-titulo">Certificaciones</div>
-                {% for cert in certificaciones %}
-                <div>{{ cert.nombre }} ({{ cert.entidad }}, {{ cert.fecha }})</div>
-                {% endfor %}
             </div>
-            <div class="main">
-                <div class="seccion-titulo">Perfil</div>
-                <div class="perfil">{{ perfil }}</div>
-                
-                <div class="seccion-titulo">Experiencia</div>
-                {% for exp in experiencia %}
-                <div class="experiencia-item">
-                    <div class="item-header">
-                        <span>{{ exp.puesto }}</span>
-                        <span>{{ exp.fecha }}</span>
-                    </div>
-                    <div class="item-sub">{{ exp.empresa }}</div>
-                    <div class="item-desc">{{ exp.descripcion }}</div>
-                </div>
-                {% endfor %}
-                
-                <div class="seccion-titulo">Educación</div>
-                {% for edu in educacion %}
-                <div class="educacion-item">
-                    <div class="item-header">
-                        <span>{{ edu.titulo }}</span>
-                        <span>{{ edu.fecha }}</span>
-                    </div>
-                    <div class="item-sub">{{ edu.institucion }}</div>
-                    <div class="item-desc">{{ edu.descripcion }}</div>
-                </div>
-                {% endfor %}
-                
-                <div class="seccion-titulo">Proyectos</div>
-                {% for proj in proyectos %}
-                <div class="experiencia-item">
-                    <div class="item-header">{{ proj.nombre }}</div>
-                    <div class="item-desc">{{ proj.descripcion }}</div>
-                </div>
-                {% endfor %}
-            </div>
+            {% endif %}
         </div>
     </div>
 </body>
+
 </html>
