@@ -7,7 +7,7 @@ app = FastAPI(title="Generador de CV API")
 # Configurar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4321", "http://127.0.0.1:4321"],
+    allow_origins=["http://localhost:4321", "http://127.0.0.1:4321", "https://project-port-six.vercel.app",],
     allow_methods=["*"],
     allow_headers=["*"],
 )
